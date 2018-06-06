@@ -85,7 +85,7 @@ public class DispositivoController extends DataBaseAdapter {
 
             String nome = cursor.getString(cursor.getColumnIndex("nome"));
             String SerialNumber =cursor.getString(cursor.getColumnIndex("SerialNumber"));
-            Boolean state;
+            Boolean estado;
 
             dispositivo = new Dispositivo();
 
@@ -99,11 +99,35 @@ public class DispositivoController extends DataBaseAdapter {
     }
 
     public boolean update(Dispositivo dispositivo){
-        return true;
+
+        ContentValues values = new ContentValues();
+        values.put("nome",dispositivo.getNome());
+
+        String where = "id = ?";
+
+        String [] whereArgs = {Integer.toString(dispositivo.getId())};
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        boolean isUpdate = db.update("dispositivo", values,where,whereArgs)>0;
+
+        db.close();
+
+
+
+        return isUpdate;
     }
 
     public boolean delete(int dispositivoID){
-        return true;
+
+        boolean isDeletado = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        isDeletado = db.delete("dispositivo","id ='"+ dispositivoID +"'",null)>0;
+        db.close();
+
+
+        return isDeletado;
     }
 
 

@@ -33,14 +33,21 @@ public class RetrieveOnLongClickListener implements View.OnLongClickListener {
 
                 } else if (item ==1){
 
+                    boolean isDeletouComSucesso = new DispositivoController(context).delete(Integer.parseInt(id));
+
+                    if (isDeletouComSucesso){
+                        Toast.makeText(context, "Contato deletado",Toast.LENGTH_SHORT).show();
+                        ((Main2Activity) context).atualizarListaDeContatos();
+                    } else {
+                        Toast.makeText(context,"Erro ao deletar contato",Toast.LENGTH_SHORT).show();
+                    }
+
                 }
+
+                dialog.dismiss();
 
             }
         }).show();
-
-        Toast.makeText(view.getContext(),"Clicado em um item da lista",Toast.LENGTH_SHORT).show();
-
-
 
 
         return false;
